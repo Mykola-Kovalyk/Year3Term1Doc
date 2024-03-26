@@ -1,4 +1,4 @@
-package com.lpnu.iot.parking.structure.repositories;
+package com.lpnu.iot.cornerstoneondemand.structure.repositories;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public abstract class CSVRepository<Resource extends com.lpnu.iot.parking.resources.Resource> {
+public abstract class CSVRepository<Resource extends com.lpnu.iot.cornerstoneondemand.resources.Resource> {
 
     private static final SimpleDateFormat FILE_NAME_DATE_FORMAT = new SimpleDateFormat("yyyy_MM_dd");
     private static final SimpleDateFormat MONTH_DATE_FORMAT = new SimpleDateFormat("yyyy_MMM");

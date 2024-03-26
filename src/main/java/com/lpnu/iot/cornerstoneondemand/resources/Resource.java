@@ -1,4 +1,4 @@
-package com.lpnu.iot.parking.resources;
+package com.lpnu.iot.cornerstoneondemand.resources;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;

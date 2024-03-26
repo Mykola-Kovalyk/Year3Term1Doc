@@ -1,8 +1,8 @@
-package com.lpnu.iot.parking.structure.controllers;
+package com.lpnu.iot.cornerstoneondemand.structure.controllers;
 
-import com.lpnu.iot.parking.resources.ParkingSlot;
-import com.lpnu.iot.parking.resources.ParkingTicket;
-import com.lpnu.iot.parking.structure.services.ParkingSlotService;
+import com.lpnu.iot.cornerstoneondemand.resources.ParkingSlot;
+import com.lpnu.iot.cornerstoneondemand.resources.ParkingTicket;
+import com.lpnu.iot.cornerstoneondemand.structure.services.ParkingSlotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

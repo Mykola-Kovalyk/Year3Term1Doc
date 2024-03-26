@@ -1,6 +1,6 @@
 package testresources;
 
-import com.lpnu.iot.parking.resources.Resource;
+import com.lpnu.iot.cornerstoneondemand.resources.Resource;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 

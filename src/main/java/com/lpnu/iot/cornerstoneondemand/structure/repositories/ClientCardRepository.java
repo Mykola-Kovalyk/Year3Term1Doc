@@ -1,6 +1,6 @@
-package com.lpnu.iot.parking.structure.repositories;
+package com.lpnu.iot.cornerstoneondemand.structure.repositories;
 
-import com.lpnu.iot.parking.resources.ClientCard;
+import com.lpnu.iot.cornerstoneondemand.resources.ClientCard;
 import org.springframework.stereotype.Repository;
 
 @Repository

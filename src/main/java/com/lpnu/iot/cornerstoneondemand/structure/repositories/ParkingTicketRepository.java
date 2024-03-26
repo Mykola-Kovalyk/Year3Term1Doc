@@ -1,6 +1,6 @@
-package com.lpnu.iot.parking.structure.repositories;
+package com.lpnu.iot.cornerstoneondemand.structure.repositories;
 
-import com.lpnu.iot.parking.resources.ParkingTicket;
+import com.lpnu.iot.cornerstoneondemand.resources.ParkingTicket;
 import org.springframework.stereotype.Repository;
 
 import java.text.SimpleDateFormat;

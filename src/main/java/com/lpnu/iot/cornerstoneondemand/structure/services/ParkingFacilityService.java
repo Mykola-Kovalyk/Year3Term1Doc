@@ -1,7 +1,7 @@
-package com.lpnu.iot.parking.structure.services;
+package com.lpnu.iot.cornerstoneondemand.structure.services;
 
-import com.lpnu.iot.parking.resources.ParkingFacility;
-import com.lpnu.iot.parking.structure.repositories.ParkingFacilityRepository;
+import com.lpnu.iot.cornerstoneondemand.resources.ParkingFacility;
+import com.lpnu.iot.cornerstoneondemand.structure.repositories.ParkingFacilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

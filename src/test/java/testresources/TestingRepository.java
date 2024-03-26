@@ -1,6 +1,6 @@
 package testresources;
 
-import com.lpnu.iot.parking.structure.repositories.CSVRepository;
+import com.lpnu.iot.cornerstoneondemand.structure.repositories.CSVRepository;
 
 public class TestingRepository extends CSVRepository<TestingResource> {
 

@@ -1,4 +1,4 @@
-package com.lpnu.iot.parking.resources;
+package com.lpnu.iot.cornerstoneondemand.resources;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
