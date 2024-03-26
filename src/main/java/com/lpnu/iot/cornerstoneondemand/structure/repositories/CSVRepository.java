@@ -13,16 +13,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
 public abstract class CSVRepository<Resource extends com.lpnu.iot.cornerstoneondemand.resources.Resource> {
 
-    private static final SimpleDateFormat FILE_NAME_DATE_FORMAT = new SimpleDateFormat("yyyy_MM_dd");
-    private static final SimpleDateFormat MONTH_DATE_FORMAT = new SimpleDateFormat("yyyy_MMM");
     private final Map<Long, Resource> dataTable = new HashMap<>();
     @Getter
     @Setter(AccessLevel.PROTECTED)
@@ -30,6 +30,10 @@ public abstract class CSVRepository<Resource extends com.lpnu.iot.cornerstoneond
     @Getter
     private long idSequence = 0;
 
+
+    public CSVRepository() {
+        this("data/data.csv");
+    }
 
     public CSVRepository(String filePath) {
         this.resourceRootPath = filePath;
@@ -45,21 +49,22 @@ public abstract class CSVRepository<Resource extends com.lpnu.iot.cornerstoneond
         }
 
         try {
-            readDataFromFile();
+            readFromFile();
         } catch (IOException exc) {
             try {
                 System.out.println(this.getClass().toString() + ": CSV file not found, creating a new one...");
-                writeDataToFile();
+                syncToFile();
             } catch (Exception internalExc) {
-                System.out.println(this.getClass().toString() + ": An error occurred while initializing a file:");
+                System.out.println(this.getClass().toString() + ": An error occurred while initializing a file: "
+                        + internalExc.getMessage());
                 internalExc.printStackTrace();
             }
         } catch (Exception exc) {
-            System.out.println(this.getClass().toString() + ": An error occurred while reading a file:");
+            System.out.println(
+                    this.getClass().toString() + ": An error occurred while reading a file: " + exc.getMessage());
             exc.printStackTrace();
         }
     }
-
 
     public Map<Long, Resource> findAll() {
         return Collections.unmodifiableMap(dataTable);
@@ -110,61 +115,118 @@ public abstract class CSVRepository<Resource extends com.lpnu.iot.cornerstoneond
         return dataTable.remove(idToRemove);
     }
 
-    public void readDataFromFile() throws IOException, CsvValidationException {
-
-        File tableRootDirectory = Paths.get(resourceRootPath, MONTH_DATE_FORMAT.format(new Date())).toFile();
-
-        if (!tableRootDirectory.exists()) {
-            throw new IOException("Directory not found!");
-        }
-
-        File[] tables = tableRootDirectory.listFiles();
-        if (tables == null) {
-            throw new IOException("tableRootDirectory is a file!");
-        }
-
+    public void removeAll() {
         dataTable.clear();
-        for (var file : tables) {
-            try (FileReader fileReader = new FileReader(file);
-                 CSVReader reader = new CSVReader(fileReader)) {
-                var names = reader.readNext();
+    }
 
-                String[] record;
-                while ((record = reader.readNext()) != null) {
-                    Resource newResource = createNewResource();
-                    newResource.setFieldValues(record);
+    public void removeIf(Predicate<Resource> predicate) {
+        dataTable.entrySet().removeIf(entry -> predicate.test(entry.getValue()));
+    }
 
-                    if (newResource.getId() > idSequence) {
-                        idSequence = newResource.getId();
-                    }
+    public void readFromFile() throws IOException, CsvValidationException {
+        removeAll();
 
-                    dataTable.put(newResource.getId(), newResource);
+        idSequence = 0;
+        try (FileReader fileReader = new FileReader(resourceRootPath);
+                CSVReader reader = new CSVReader(fileReader)) {
+
+            String[] header = createNewResource().getFieldNames();
+            findHeader(reader, header);
+
+            String[] record;
+            while ((record = reader.readNext()) != null) {
+                Resource newResource = createNewResource();
+                newResource.setFieldValues(record);
+
+                if (newResource.getId() > idSequence) {
+                    idSequence = newResource.getId();
                 }
+
+                dataTable.put(newResource.getId(), newResource);
             }
         }
     }
 
-    public void writeDataToFile() throws IOException {
+    private void findHeader(CSVReader reader, String[] header) throws IOException, CsvValidationException {
+        String[] record;
 
-        var currentDate = new Date();
+        boolean headerFound = false;
+        while ((record = reader.readNext()) != null) {
+            if (recordEqual(record, header)) {
+                headerFound = true;
+                break;
+            }
+        }
+
+        if (!headerFound) {
+            throw new IOException("Header not found in the file");
+        }
+    }
+
+    private static boolean recordEqual(String[] record, String[] header) {
+
+        if (record.length != header.length) {
+            return false;
+        }
+
+        for (int i = 0; i < record.length; i++) {
+            if (!record[i].equals(header[i])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public void syncToFile() throws IOException, CsvValidationException {
+        idSequence = 0;
         File tableFile = Paths.get(
-                resourceRootPath,
-                MONTH_DATE_FORMAT.format(currentDate),
-                FILE_NAME_DATE_FORMAT.format(currentDate) + ".csv"
-        ).toFile();
+                resourceRootPath).toFile();
+
+        String[] header = createNewResource().getFieldNames();
 
         if (!tableFile.exists()) {
             dataTable.clear();
-            new File(tableFile.getParent()).mkdirs();
+            tableFile.getAbsoluteFile().getParentFile().mkdirs();
+            tableFile.createNewFile();
         }
 
+        List<String[]> records = new ArrayList<>();
+
+        try (FileReader fileReader = new FileReader(resourceRootPath);
+                CSVReader reader = new CSVReader(fileReader)) {
+
+            String[] record;
+
+            boolean thisResource = false;
+            while ((record = reader.readNext()) != null) {
+                if (recordEqual(record, header))
+                    thisResource = true;
+                else if (record.length > 0 && record[0].equals("id"))
+                    thisResource = false;
+
+                if (thisResource)
+                    continue;
+
+                records.add(record);
+            }
+        }
+
+        tableFile.delete();
+
         try (FileWriter fileWriter = new FileWriter(tableFile);
-             CSVWriter writer = new CSVWriter(fileWriter)) {
+                CSVWriter writer = new CSVWriter(fileWriter)) {
+
+            for (String[] record : records)
+                writer.writeNext(record, false);
 
             writer.writeNext(createNewResource().getFieldNames(), false);
 
             for (Map.Entry<Long, Resource> entry : dataTable.entrySet()) {
                 writer.writeNext(entry.getValue().getFieldValues(), false);
+
+                if (entry.getKey() > idSequence)
+                    idSequence = entry.getKey();
             }
         }
     }

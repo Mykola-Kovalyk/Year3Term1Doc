@@ -25,6 +25,7 @@ public class TestingResource extends Resource {
     @Override
     public String[] getFieldNames() {
         return new String[] {
+                "id",
                 "someInt",
                 "someString",
                 "someBoolean"

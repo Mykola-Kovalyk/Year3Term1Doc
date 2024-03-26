@@ -6,9 +6,10 @@ import testresources.TestingResource;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 
 public class TestRepository {
 
@@ -19,9 +20,9 @@ public class TestRepository {
         var calendar = Calendar.getInstance();
 
         var dayBefore = calendar.get(Calendar.DAY_OF_MONTH);
-        repository.writeDataToFile();
 
-        repository.readDataFromFile();
+        repository.syncToFile();
+        repository.readFromFile();
         var dayAfter = calendar.get(Calendar.DAY_OF_MONTH);
 
         if (dayBefore != dayAfter) {
@@ -53,7 +54,15 @@ public class TestRepository {
     public void setUp() {
         repository = new TestingRepository();
 
-        resources = new TestingResource[]{
+        repository.removeAll();
+
+        try {
+            repository.syncToFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        resources = new TestingResource[] {
                 new TestingResource(-4, "William", true),
                 new TestingResource(5836, "Marcus", false),
                 new TestingResource(7, "Jenny, Robert", true),
@@ -65,6 +74,12 @@ public class TestRepository {
 
         for (var resource : resources) {
             repository.add(resource);
+        }
+
+        try {
+            repository.syncToFile();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
