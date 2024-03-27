@@ -33,10 +33,23 @@ public abstract class GenericService<Res extends Resource> {
 
     public void updateResource(Res resource) {
         repository.replace(resource.getId(), resource);
+        try {
+            repository.syncToFile();
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Failed to save resource.");
+        }
     }
 
     public void deleteResource(Long resourceId) {
         repository.remove(resourceId);
+
+        try {
+            repository.syncToFile();
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Failed to save resource.");
+        }
     }
 
 }

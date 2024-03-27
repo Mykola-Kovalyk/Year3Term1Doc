@@ -49,22 +49,25 @@ public class WorkExperience extends Resource {
 
     @Override
     public void setFieldValues(String[] csv) {
-        setId(Long.parseLong(csv[0]));
-        company = csv[1];
-        position = csv[2];
+        int i = 0;
         
+        setId(Long.parseLong(csv[i++]));
+        candidateId = Long.parseLong(csv[i++]);
+        company = csv[i++];
+        position = csv[i++];
+
         try {
-            startDate = DateFormat.getDateInstance().parse(csv[3]);
+            startDate = DateFormat.getDateInstance().parse(csv[i++]);
         } catch (Exception e) {
             startDate = new Date();
         }
 
         try {
-            endDate = DateFormat.getDateInstance().parse(csv[4]);
+            endDate = DateFormat.getDateInstance().parse(csv[i++]);
         } catch (Exception e) {
             endDate = new Date();
         }
 
-        description = csv[5];
+        description = csv[i++];
     }
 }

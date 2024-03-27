@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 public class Education extends Resource {
 
+    private Long candidateId;
     private String institution;
     private String degree;
     private String fieldOfStudy;
@@ -20,6 +21,7 @@ public class Education extends Resource {
     public String[] getFieldValues() {
         return new String[] {
                 Long.toString(getId()),
+                Long.toString(candidateId),
                 institution,
                 degree,
                 fieldOfStudy,
@@ -31,6 +33,7 @@ public class Education extends Resource {
     public String[] getFieldNames() {
         return new String[] {
                 "id",
+                "candidateId",
                 "institution",
                 "degree",
                 "fieldOfStudy",
@@ -41,9 +44,10 @@ public class Education extends Resource {
     @Override
     public void setFieldValues(String[] csv) {
         setId(Long.parseLong(csv[0]));
-        institution = csv[1];
-        degree = csv[2];
-        fieldOfStudy = csv[3];
-        graduationYear = Integer.parseInt(csv[4]);
+        candidateId = Long.parseLong(csv[1]);
+        institution = csv[2];
+        degree = csv[3];
+        fieldOfStudy = csv[4];
+        graduationYear = Integer.parseInt(csv[5]);
     }
 }

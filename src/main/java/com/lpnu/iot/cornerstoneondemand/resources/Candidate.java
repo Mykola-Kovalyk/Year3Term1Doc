@@ -34,8 +34,9 @@ public class Candidate extends Resource {
 
     @Override
     public void setFieldValues(String[] csv) {
-        setId(Long.parseLong(csv[0]));
-        userId = Long.parseLong(csv[1]);
-        jobId = Long.parseLong(csv[1]);
+        int i = 0;
+        setId(Long.parseLong(csv[i++]));
+        userId = Long.parseLong(csv[i++]);
+        jobId = Long.parseLong(csv[i++]);
     }
 }

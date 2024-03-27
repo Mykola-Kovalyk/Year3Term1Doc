@@ -15,7 +15,7 @@ import lombok.Setter;
 public class JobApplication extends Resource {
 
     private Long candidateId;
-    private Long jobRequisitionId;
+    private Long jobId;
     private ApplicationStatus status;
     private Date applicationDate;
 
@@ -24,7 +24,7 @@ public class JobApplication extends Resource {
         return new String[] {
                 Long.toString(getId()),
                 Long.toString(candidateId),
-                Long.toString(jobRequisitionId),
+                Long.toString(jobId),
                 status.toString(),
                 applicationDate.toString()
         };
@@ -35,7 +35,7 @@ public class JobApplication extends Resource {
         return new String[] {
                 "id",
                 "candidateId",
-                "jobRequisitionId",
+                "jobId",
                 "status",
                 "applicationDate"
         };
@@ -45,7 +45,7 @@ public class JobApplication extends Resource {
     public void setFieldValues(String[] csv) {
         setId(Long.parseLong(csv[0]));
         candidateId = Long.parseLong(csv[1]);
-        jobRequisitionId = Long.parseLong(csv[2]);
+        jobId = Long.parseLong(csv[2]);
         status = ApplicationStatus.valueOf(csv[3]);
 
         try {
