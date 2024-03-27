@@ -12,10 +12,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +27,6 @@ public abstract class CSVRepository<Resource extends com.lpnu.iot.cornerstoneond
     private String resourceRootPath;
     @Getter
     private long idSequence = 0;
-
 
     public CSVRepository() {
         this("data/data.csv");
@@ -135,6 +132,9 @@ public abstract class CSVRepository<Resource extends com.lpnu.iot.cornerstoneond
 
             String[] record;
             while ((record = reader.readNext()) != null) {
+                if (record.length == 0 || record[0].equals("id"))
+                    break;
+
                 Resource newResource = createNewResource();
                 newResource.setFieldValues(record);
 

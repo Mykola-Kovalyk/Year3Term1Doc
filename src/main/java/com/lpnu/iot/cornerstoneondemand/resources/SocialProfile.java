@@ -16,7 +16,7 @@ public class SocialProfile extends Resource {
 
     @Override
     public String[] getFieldValues() {
-        return new String[] { getId().toString(), platform, profileUrl };
+        return new String[] { Long.toString(getId()), platform, profileUrl };
     }
 
     @Override
@@ -30,7 +30,7 @@ public class SocialProfile extends Resource {
 
     @Override
     public void setFieldValues(String[] csv) {
-        setId(Long.getLong(csv[0]));
+        setId(Long.parseLong(csv[0]));
         platform = csv[1];
         profileUrl = csv[2];
     }

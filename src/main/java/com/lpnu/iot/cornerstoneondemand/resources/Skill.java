@@ -39,7 +39,7 @@ public class Skill extends Resource {
     public void setFieldValues(String[] csv) {
         setId(Long.parseLong(csv[0]));
         candidateId = Long.parseLong(csv[1]);
-        name = csv[1];
-        level = SkillLevel.valueOf(csv[2]);
+        name = csv[2];
+        level = SkillLevel.valueOf(csv[3]);
     }
 }

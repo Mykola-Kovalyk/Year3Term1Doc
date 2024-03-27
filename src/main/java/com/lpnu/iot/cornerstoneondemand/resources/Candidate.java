@@ -11,19 +11,15 @@ import lombok.Setter;
 @Setter
 public class Candidate extends Resource {
 
+    private Long userId;
     private Long jobId;
-    private String name;
-    private String phone;
-    private String email;
 
     @Override
     public String[] getFieldValues() {
         return new String[] {
                 Long.toString(getId()),
-                jobId.toString(),
-                name,
-                phone,
-                email
+                userId.toString(),
+                jobId.toString()
         };
     }
 
@@ -31,19 +27,15 @@ public class Candidate extends Resource {
     public String[] getFieldNames() {
         return new String[] {
                 "id",
+                "userId",
                 "jobId",
-                "name",
-                "phone",
-                "email",
         };
     }
 
     @Override
     public void setFieldValues(String[] csv) {
         setId(Long.parseLong(csv[0]));
+        userId = Long.parseLong(csv[1]);
         jobId = Long.parseLong(csv[1]);
-        name = csv[2];
-        phone = csv[3];
-        email = csv[4];
     }
 }

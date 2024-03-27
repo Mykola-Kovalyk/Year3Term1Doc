@@ -16,7 +16,7 @@ public class WorkExperience extends Resource {
 
     private Long candidateId;
     private String company;
-    private String poisition;
+    private String position;
     private Date startDate;
     private Date endDate;
     private String description;
@@ -27,7 +27,7 @@ public class WorkExperience extends Resource {
                 Long.toString(getId()),
                 candidateId.toString(),
                 company,
-                poisition,
+                position,
                 startDate.toString(),
                 endDate.toString(),
                 description
@@ -40,7 +40,7 @@ public class WorkExperience extends Resource {
                 "id",
                 "candidateId",
                 "company",
-                "poisition",
+                "position",
                 "startDate",
                 "endDate",
                 "description"
@@ -51,7 +51,7 @@ public class WorkExperience extends Resource {
     public void setFieldValues(String[] csv) {
         setId(Long.parseLong(csv[0]));
         company = csv[1];
-        poisition = csv[2];
+        position = csv[2];
         
         try {
             startDate = DateFormat.getDateInstance().parse(csv[3]);
