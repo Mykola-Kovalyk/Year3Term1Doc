@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 
-@RestController
+@Controller
 @RequestMapping("/recruiters")
 public class RecruiterController extends GenericController<Recruiter> {
 
     @Autowired
     public RecruiterController(RecruiterService service) {
-        super(service);
+        super(service, "index");
     }
 
     @GetMapping("{managerId}/requisitions")

@@ -8,16 +8,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.server.ResponseStatusException;
 
-@RestController
+@Controller
 @RequestMapping("/candidates")
 public class CandidateController extends GenericController<Candidate> {
 
     @Autowired
     public CandidateController(CandidateService service) {
-        super(service);
+        super(service, "index");
     }
 
     @PostMapping("add")

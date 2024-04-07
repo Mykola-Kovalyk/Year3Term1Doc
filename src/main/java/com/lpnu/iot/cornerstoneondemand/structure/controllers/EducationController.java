@@ -7,15 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 
-@RestController
+@Controller
 @RequestMapping("/educations")
 public class EducationController extends GenericController<Education> {
 
     @Autowired
     public EducationController(EducationService service) {
-        super(service);
+        super(service, "index");
     }
 
     @PostMapping("add")
