@@ -21,3 +21,8 @@ buildNumber.properties
 
 # csv files
 data/*
+
+
+# tailwindcss
+node_modules/
+static/
