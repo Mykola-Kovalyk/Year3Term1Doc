@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title th:text="${res_name}" />
+    <link href="/main.css" rel="stylesheet" />
+  </head>
+  <body>
+    <script>
+      function redirectToGeneral(resource) {
+        window.location.replace("/" + resource + "/all");
+      }
+
+      function deleteResource(resource, id) {
+        fetch("/" + resource + "/" + id, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            if (response.ok) {
+              redirectToGeneral(resource);
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
+
+    <div th:replace="fragments :: header" />
+
+    <div class="p-10">
+      <div class="p-4 bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-2xl font-bold">
+            <button th:onclick="redirectToGeneral([[${res_name}]]);">
+              [[${res_name}]]
+            </button>
+            display
+          </h2>
+          <a
+            th:href="@{'/' + ${res_name} + '/add'}"
+            class="bg-blue-500 text-white px-4 py-2 rounded cursor"
+            >+</a
+          >
+        </div>
+        <table class="w-full">
+          <thead>
+            <tr>
+              <th
+                th:each="field : ${resource_fields}"
+                th:text="${field}"
+                align="left"
+              />
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              th:each="resource : ${resources}"
+              class="group hover:bg-gray-100"
+            >
+              <td
+                th:each="value : ${resource}"
+                th:text="${value}"
+                class="justify-between"
+              />
+              <td>
+                <a
+                  th:href="@{'/' + ${res_name} + '/' + ${resource[0]}}"
+                  class="invisible group-hover:visible text-blue-500 underline"
+                  >View</a
+                >
+
+                <!-- delete -->
+                <button
+                  th:onclick="deleteResource([[${res_name}]], [[${resource[0]}]]);"
+                  class="invisible group-hover:visible text-red-500 underline"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div th:replace="fragments :: footer" />
+  </body>
+</html>

@@ -16,7 +16,7 @@ public class JobApplicationController extends GenericController<JobApplication> 
 
     @Autowired
     public JobApplicationController(JobApplicationService service) {
-        super(service, "index");
+        super(service, "job_applications");
     }
 
     @PostMapping("apply")

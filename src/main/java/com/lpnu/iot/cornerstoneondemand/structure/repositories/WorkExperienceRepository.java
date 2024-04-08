@@ -6,8 +6,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class WorkExperienceRepository extends CSVRepository<WorkExperience> {
+
+    public WorkExperienceRepository() {
+        super("work_experiences");
+    }
+
     @Override
-    protected WorkExperience createNewResource() {
+    public WorkExperience newResource() {
         return new WorkExperience();
     }
 }

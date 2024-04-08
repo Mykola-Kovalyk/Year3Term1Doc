@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fragments</title>
+    <link href="/main.css" rel="stylesheet" />
+</head>
+<body>
+
+    <header th:fragment="cod_header" class="bg-blue-900 text-white py-4">
+        <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold">Cornerstone OnDemand</h1>
+        <nav>
+            <a href="/" class="mx-2">Home</a>
+            <a href="/social_profiles/all" class="mx-2">Profiles</a>
+            <a href="/job_requisitions/all" class="mx-2">Jobs</a>
+            <a href="contact" class="mx-2">Contact</a>
+        </nav>
+        </div>
+    </header>
+
+    <footer th:fragment="cod_footer" class="bg-blue-900 text-white py-4 mt-8">
+        <div class="container mx-auto text-center">
+        <p>&copy; 2024 Cornerstone OnDemand. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <tr th:fragment="user_header">
+        <td class="text-gray-500">ID</th>
+        <th class="text-gray-500">Name</th>
+        <th class="text-gray-500">Phone</th>
+        <th class="text-gray-500">Email</th>
+        <th class="text-gray-500">Actions</th>
+    </tr>
+
+    <tr th:fragment="user_row">
+        <td th:text="${user.id}" />
+        <td th:text="${user.name}" />
+        <td th:text="${user.phone}" />
+        <td th:text="${user.email}" />
+        <td>
+            <a href="/users/edit/{id}">Edit</a>
+            <button>Delete</button>
+        </td>
+    </tr>
+  </body>  
+</html>

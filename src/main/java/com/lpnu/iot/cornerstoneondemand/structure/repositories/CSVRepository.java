@@ -19,21 +19,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 public abstract class CSVRepository<Resource extends com.lpnu.iot.cornerstoneondemand.resources.Resource> {
 
     private final Map<Long, Resource> dataTable = new HashMap<>();
     @Getter
     @Setter(AccessLevel.PROTECTED)
     private String resourceRootPath;
+
+    @Getter
+    @Setter(AccessLevel.PROTECTED)
+    private String resourceName;
+
     @Getter
     private long idSequence = 0;
 
-    public CSVRepository() {
-        this("data/data.csv");
+    public CSVRepository(String resourceName) {
+        this("data/data.csv", resourceName);
     }
 
-    public CSVRepository(String filePath) {
+    public CSVRepository(String filePath, String resourceName) {
         this.resourceRootPath = filePath;
+        this.resourceName = resourceName;
 
         try {
             var rootDir = new File(filePath).getParent();
@@ -127,7 +135,9 @@ public abstract class CSVRepository<Resource extends com.lpnu.iot.cornerstoneond
         try (FileReader fileReader = new FileReader(resourceRootPath);
                 CSVReader reader = new CSVReader(fileReader)) {
 
-            String[] header = createNewResource().getFieldNames();
+            String[] header = newResource().getFieldNames();
+            header = ArrayUtils.addAll(header, new String[] { resourceName });
+
             findHeader(reader, header);
 
             String[] record;
@@ -135,7 +145,7 @@ public abstract class CSVRepository<Resource extends com.lpnu.iot.cornerstoneond
                 if (record.length == 0 || record[0].equals("id"))
                     break;
 
-                Resource newResource = createNewResource();
+                                Resource newResource = newResource();
                 newResource.setFieldValues(record);
 
                 if (newResource.getId() > idSequence) {
@@ -183,7 +193,8 @@ public abstract class CSVRepository<Resource extends com.lpnu.iot.cornerstoneond
         File tableFile = Paths.get(
                 resourceRootPath).toFile();
 
-        String[] header = createNewResource().getFieldNames();
+        String[] header = newResource().getFieldNames();
+        header = ArrayUtils.addAll(header, new String[] { resourceName });
 
         if (!tableFile.exists()) {
             dataTable.clear();
@@ -220,7 +231,7 @@ public abstract class CSVRepository<Resource extends com.lpnu.iot.cornerstoneond
             for (String[] record : records)
                 writer.writeNext(record, false);
 
-            writer.writeNext(createNewResource().getFieldNames(), false);
+            writer.writeNext(header, false);
 
             for (Map.Entry<Long, Resource> entry : dataTable.entrySet()) {
                 writer.writeNext(entry.getValue().getFieldValues(), false);
@@ -231,5 +242,5 @@ public abstract class CSVRepository<Resource extends com.lpnu.iot.cornerstoneond
         }
     }
 
-    protected abstract Resource createNewResource();
+    public abstract Resource newResource();
 }

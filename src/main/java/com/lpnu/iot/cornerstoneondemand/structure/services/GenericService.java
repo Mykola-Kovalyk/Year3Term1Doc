@@ -13,6 +13,10 @@ public abstract class GenericService<Res extends Resource> {
         this.repository = resourceRepository;
     }
 
+    public Res newResource() {
+        return repository.newResource();
+    }
+
     public Iterable<Res> getResources() {
         return repository.findAll().entrySet().stream().map(entry -> entry.getValue()).toList();
     }
@@ -29,6 +33,13 @@ public abstract class GenericService<Res extends Resource> {
 
     public void createResource(Res resource) {
         repository.add(resource);
+
+        try {
+            repository.syncToFile();
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Failed to save resource.");
+        }
     }
 
     public void updateResource(Res resource) {

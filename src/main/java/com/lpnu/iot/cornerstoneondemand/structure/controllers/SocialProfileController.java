@@ -15,15 +15,6 @@ public class SocialProfileController extends GenericController<SocialProfile> {
 
     @Autowired
     public SocialProfileController(SocialProfileService service) {
-        super(service, "index");
-    }
-
-    @PostMapping("add")
-    public void addSocialProfile(@PathVariable Long candidateId, @PathVariable String platform, @PathVariable String profileUrl) throws Exception {
-        if(candidateId == null || platform == null || profileUrl == null)
-            throw new Exception("Invalid social profile data");
-
-        SocialProfile socialProfile = new SocialProfile(candidateId, platform, profileUrl);
-        ((SocialProfileService) service).createResource(socialProfile);
+        super(service, "social_profiles");
     }
 }

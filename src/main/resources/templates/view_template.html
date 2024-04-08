@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Details</title>
+    <link href="/main.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div th:replace="fragments :: header" />
+    <div class="p-10">
+      <div class="p-4 bg-white rounded-xl shadow-md overflow-hidden">
+        <h2
+          class="text-2xl font-bold mb-4"
+          th:text="${'Details for ' + res_name}"
+        ></h2>
+        <form
+          th:action="@{'/' + ${res_name} + '/' + ${(exists ? (resource[0] + '/edit') : 'add')}}"
+          th:method="post"
+        >
+          <ul>
+            <li th:each="field, iter : ${resource_fields}" class="mb-4">
+              <div
+                th:if="${!(field == 'id' and resource[__${iter.index}__] == '-1')}"
+              >
+                <label th:text="${field}" class="block font-bold mb-2"></label>
+                <input
+                  th:name="${field}"
+                  th:value="${resource[__${iter.index}__]}"
+                  class="w-full px-4 py-2 border border-gray-300 rounded"
+                />
+              </div>
+            </li>
+          </ul>
+          <div class="flex justify-end">
+            <button
+              type="submit"
+              class="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              th:onclick="deleteResource([[${res_name}]], [[${resource[0]}]])"
+              class="bg-red-500 text-white px-4 py-2 rounded"
+            >
+              Delete
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div th:replace="fragments :: footer" />
+    <script th:inline="javascript">
+      function deleteResource(resource, id) {
+        fetch("/" + resource + "/" + id, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            if (response.ok) {
+              window.location.replace(
+                window.location.href.replace(/\/[^\/]*$/, "/all")
+              );
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
+  </body>
+</html>

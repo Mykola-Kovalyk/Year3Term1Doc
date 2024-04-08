@@ -6,8 +6,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class SkillRepository extends CSVRepository<Skill> {
+
+    public SkillRepository() {
+        super("skills");
+    }
+    
     @Override
-    protected Skill createNewResource() {
+    public Skill newResource() {
         return new Skill();
     }
 }

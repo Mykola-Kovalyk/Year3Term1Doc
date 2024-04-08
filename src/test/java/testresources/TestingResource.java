@@ -1,5 +1,7 @@
 package testresources;
 
+import java.util.Objects;
+
 import com.lpnu.iot.cornerstoneondemand.resources.Resource;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -15,7 +17,7 @@ public class TestingResource extends Resource {
     @Override
     public String[] getFieldValues() {
         return new String[] {
-                Long.toString(getId()),
+                Objects.toString(getId()),
                 Integer.toString(someInt),
                 someString,
                 Boolean.toString(someBoolean)

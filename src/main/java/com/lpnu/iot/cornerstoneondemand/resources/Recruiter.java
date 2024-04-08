@@ -1,5 +1,7 @@
 package com.lpnu.iot.cornerstoneondemand.resources;
 
+import java.util.Objects;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +18,7 @@ public class Recruiter extends Resource {
     @Override
     public String[] getFieldValues() {
         return new String[] {
-                Long.toString(getId()),
+                Objects.toString(getId()),
                 department
         };
     }

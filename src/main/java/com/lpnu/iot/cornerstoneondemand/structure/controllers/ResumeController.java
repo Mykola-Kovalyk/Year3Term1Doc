@@ -16,21 +16,11 @@ public class ResumeController extends GenericController<Resume> {
 
     @Autowired
     public ResumeController(ResumeService service) {
-        super(service, "index");
+        super(service, "resumes");
     }
 
     @GetMapping("{id}/full")
     public Object getFullResumeData(@PathVariable Long id) {
         return ((ResumeService) service).getFullResumeData(id);
-    }
-
-
-    @PostMapping("add") 
-    public void addResume(@PathVariable Long candidateId) throws Exception {
-        if(candidateId == null)
-            throw new Exception("Invalid resume data");
-
-        Resume resume = new Resume(candidateId);
-        ((ResumeService) service).createResource(resume);
     }
 }

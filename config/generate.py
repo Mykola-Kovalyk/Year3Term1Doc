@@ -285,51 +285,31 @@ resumes = generate_resumes(num_resumes)
 job_applications = generate_job_applications(num_job_applications)
 
 
+
+def write_data(file, data, name, values: list[dict]):
+    writer = csv.writer(csvfile)
+    
+    header = list(values[0].keys())
+    header.append(name)
+    
+    writer.writerow(header)
+    for value in values:
+        writer.writerow(value.values())
+
+
 with open("data/data.csv", "w", newline="") as csvfile:
     writer = csv.writer(csvfile)
 
-    writer.writerow(candidates[0].keys())
-    for candidate in candidates:
-        writer.writerow(candidate.values())
-
-    writer.writerow(users[0].keys())
-    for user in users:
-        writer.writerow(user.values())
-
-    writer.writerow(job_requisitions[0].keys())
-    for job_requisition in job_requisitions:
-        writer.writerow(job_requisition.values())
-
-    writer.writerow(work_experiences[0].keys())
-    for work_experience in work_experiences:
-        writer.writerow(work_experience.values())
-
-    writer.writerow(educations[0].keys())
-    for education in educations:
-        writer.writerow(education.values())
-
-    writer.writerow(skills[0].keys())
-    for skill in skills:
-        writer.writerow(skill.values())
-
-    writer.writerow(job_requirements[0].keys())
-    for job_requirement in job_requirements:
-        writer.writerow(job_requirement.values())
-
-    writer.writerow(recruiters[0].keys())
-    for recruiter in recruiters:
-        writer.writerow(recruiter.values())
-
-    writer.writerow(social_profiles[0].keys())
-    for social_profile in social_profiles:
-        writer.writerow(social_profile.values())
-
-    writer.writerow(resumes[0].keys())
-    for resume in resumes:
-        writer.writerow(resume.values())
-        
-    writer.writerow(job_applications[0].keys())
-    for job_application in job_applications:
-        writer.writerow(job_application.values())
+    write_data(csvfile, candidates, "candidates", candidates)
+    write_data(csvfile, users, "users", users)
+    write_data(csvfile, job_requisitions, "job_requisitions", job_requisitions)
+    write_data(csvfile, work_experiences, "work_experiences", work_experiences)
+    write_data(csvfile, educations, "educations", educations)
+    write_data(csvfile, skills, "skills", skills)
+    write_data(csvfile, job_requirements, "job_requirements", job_requirements)
+    write_data(csvfile, recruiters, "recruiters", recruiters)
+    write_data(csvfile, social_profiles, "social_profiles", social_profiles)
+    write_data(csvfile, resumes, "resumes", resumes)   
+    write_data(csvfile, job_applications, "job_applications", job_applications)
 
 print("Data generation completed. Check the 'data.csv' file.")

@@ -2,6 +2,7 @@ package com.lpnu.iot.cornerstoneondemand.resources;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +25,7 @@ public class WorkExperience extends Resource {
     @Override
     public String[] getFieldValues() {
         return new String[] {
-                Long.toString(getId()),
+                Objects.toString(getId()),
                 candidateId.toString(),
                 company,
                 position,

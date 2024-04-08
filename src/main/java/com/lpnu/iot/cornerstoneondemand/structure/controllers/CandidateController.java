@@ -17,15 +17,6 @@ public class CandidateController extends GenericController<Candidate> {
 
     @Autowired
     public CandidateController(CandidateService service) {
-        super(service, "index");
-    }
-
-    @PostMapping("add")
-    public void addCandidate(@PathVariable Long candidateId, @PathVariable Long jobId) {
-        if (candidateId == null || jobId == null)
-            throw new ResponseStatusException(
-                    HttpStatus.FORBIDDEN, "Invalid data.");
-
-        ((CandidateService) service).addCandidate(new Candidate(candidateId, jobId));
+        super(service, "candidates");
     }
 }

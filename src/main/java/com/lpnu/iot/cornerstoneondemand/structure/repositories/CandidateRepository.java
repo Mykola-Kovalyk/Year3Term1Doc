@@ -6,8 +6,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class CandidateRepository extends CSVRepository<Candidate> {
 
+    public CandidateRepository() {
+        super("candidates");
+    }
+
     @Override
-    protected Candidate createNewResource() {
+    public Candidate newResource() {
         return new Candidate();
     }
 }

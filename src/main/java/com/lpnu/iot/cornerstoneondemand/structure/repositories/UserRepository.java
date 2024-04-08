@@ -6,8 +6,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserRepository extends CSVRepository<User> {
+
+    public UserRepository() {
+        super("users");
+    }
+    
     @Override
-    protected User createNewResource() {
+    public User newResource() {
         return new User();
     }
 }

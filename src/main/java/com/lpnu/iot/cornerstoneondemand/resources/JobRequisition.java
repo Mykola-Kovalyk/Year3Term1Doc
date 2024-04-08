@@ -1,5 +1,7 @@
 package com.lpnu.iot.cornerstoneondemand.resources;
 
+import java.util.Objects;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,10 +21,10 @@ public class JobRequisition extends Resource {
     @Override
     public String[] getFieldValues() {
         return new String[] {
-                Long.toString(getId()),
+                Objects.toString(getId()),
                 jobDescription,
                 location,
-                Long.toString(requisitionManagerId)
+                Objects.toString(requisitionManagerId)
         };
     }
 
@@ -38,9 +40,10 @@ public class JobRequisition extends Resource {
 
     @Override
     public void setFieldValues(String[] csv) {
-        setId(Long.parseLong(csv[0]));
-        jobDescription = csv[1];
-        location = csv[2];
-        requisitionManagerId = Long.parseLong(csv[3]);
+        int i = 0;
+        setId(Long.parseLong(csv[i++]));
+        jobDescription = csv[i++];
+        location = csv[i++];
+        requisitionManagerId = Long.parseLong(csv[i++]);
     }
 }

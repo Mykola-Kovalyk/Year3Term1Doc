@@ -16,13 +16,6 @@ public class JobRequirementController extends GenericController<JobRequirement> 
 
     @Autowired
     public JobRequirementController(JobRequirementService service) {
-        super(service, "index");
-    }
-
-    @PostMapping("add")
-    public void addJobRequirement(@PathVariable Long jobId, @PathVariable String type,
-            @PathVariable String description) {
-        ((JobRequirementService) service)
-                .createResource(new JobRequirement(jobId, JobRequirementType.valueOf(type), description));
+        super(service, "job_requirements");
     }
 }

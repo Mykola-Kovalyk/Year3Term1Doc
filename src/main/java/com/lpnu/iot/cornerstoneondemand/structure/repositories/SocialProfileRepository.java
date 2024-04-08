@@ -6,8 +6,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class SocialProfileRepository extends CSVRepository<SocialProfile> {
+
+    public SocialProfileRepository() {
+        super("social_profiles");
+    }
+    
     @Override
-    protected SocialProfile createNewResource() {
+    public SocialProfile newResource() {
         return new SocialProfile();
     }
 }

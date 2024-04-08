@@ -6,8 +6,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ResumeRepository extends CSVRepository<Resume> {
+
+    public ResumeRepository() {
+        super("resumes");
+    }
+    
     @Override
-    protected Resume createNewResource() {
+    public Resume newResource() {
         return new Resume();
     }
 }

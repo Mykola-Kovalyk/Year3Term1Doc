@@ -16,20 +16,11 @@ public class RecruiterController extends GenericController<Recruiter> {
 
     @Autowired
     public RecruiterController(RecruiterService service) {
-        super(service, "index");
+        super(service, "recruiters");
     }
 
     @GetMapping("{managerId}/requisitions")
     public Object getRequisitions(@PathVariable Long managerId) {
         return ((RecruiterService) service).getRequisitions(managerId);
-    }
-
-    @PostMapping("add")
-    public void addRecruiter(@PathVariable String department) throws Exception {
-        if(department == null)
-            throw new Exception("Invalid recruiter data");
-
-        Recruiter recruiter = new Recruiter(department);
-        ((RecruiterService) service).createResource(recruiter);
     }
 }

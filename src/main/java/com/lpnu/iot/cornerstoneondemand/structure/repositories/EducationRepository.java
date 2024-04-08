@@ -6,8 +6,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class EducationRepository extends CSVRepository<Education> {
+
+    public EducationRepository() {
+        super("educations");
+    }
+    
     @Override
-    protected Education createNewResource() {
+    public Education newResource() {
         return new Education();
     }
 }

@@ -6,8 +6,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class JobRequirementRepository extends CSVRepository<JobRequirement> {
 
+    public JobRequirementRepository() {
+        super("job_requirements");
+    }
+
     @Override
-    protected JobRequirement createNewResource() {
+    public JobRequirement newResource() {
         return new JobRequirement();
     }
 }

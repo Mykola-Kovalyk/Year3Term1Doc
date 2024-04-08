@@ -6,8 +6,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class JobApplicationRepository extends CSVRepository<JobApplication> {
+
+    public JobApplicationRepository() {
+        super("job_applications");
+    }
+    
     @Override
-    protected JobApplication createNewResource() {
+    public JobApplication newResource() {
         return new JobApplication();
     }
 }

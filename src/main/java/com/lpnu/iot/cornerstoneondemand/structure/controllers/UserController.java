@@ -6,6 +6,7 @@ import com.lpnu.iot.cornerstoneondemand.structure.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +18,7 @@ public class UserController extends GenericController<User> {
 
     @Autowired
     public UserController(UserService service) {
-        super(service, "index");
+        super(service, "users");
     }
 
     @PostMapping("/add")
@@ -30,7 +31,8 @@ public class UserController extends GenericController<User> {
     }
 
     @Override
-    public String deleteResource(@RequestParam Long id, Model model) {
+    @DeleteMapping("/{id}")
+    public String deleteResource(@PathVariable Long id, Model model) {
         if(id == null)
             throw new IllegalArgumentException("Invalid user id");
         return super.deleteResource(id, model);

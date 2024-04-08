@@ -18,7 +18,7 @@ public class WorkExperienceController extends GenericController<WorkExperience> 
 
     @Autowired
     public WorkExperienceController(WorkExperienceService service) {
-        super(service, "index");
+        super(service, "work_experiences");
     }
 
     @PostMapping("add")

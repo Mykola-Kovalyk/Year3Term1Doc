@@ -1,10 +1,77 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Thymeleaf Template</title>
-</head>
-<body>
-    <h1>Welcome to Thymeleaf!</h1>
-</body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cornerstone OnDemand Style Page</title>
+    <link href="/main.css" rel="stylesheet" />
+  </head>
+
+  <body class="bg-gray-100 font-sans">
+    <div th:replace="fragments :: cod_header"></div>
+
+    <div class="container mx-auto py-8">
+      <h2 class="text-3xl font-bold mb-4">Innovative Learning Solutions</h2>
+      <p class="text-gray-700 leading-relaxed">
+        Revolutionize your workforce with our cutting-edge learning and
+        development programs tailored to your organization's needs.
+      </p>
+
+      <div class="mt-8">
+        <h3 class="text-2xl font-bold mb-4">Our Services</h3>
+        <ul class="list-disc list-inside text-gray-700">
+          <li>Learning and Development</li>
+          <li>Performance Management</li>
+          <li>Talent Management</li>
+          <li>Succession Planning</li>
+        </ul>
+      </div>
+
+      <div class="mt-8">
+        <h3 class="text-2xl font-bold mb-4">
+          Why Choose Cornerstone OnDemand?
+        </h3>
+        <p class="text-gray-700 leading-relaxed">
+          Experience the difference with our expertise, advanced technology,
+          customized solutions, and dedicated support.
+        </p>
+        <ul class="list-disc list-inside text-gray-700">
+          <li>Expertise in Learning and Development</li>
+          <li>Advanced Technology and Analytics</li>
+          <li>Customized Solutions for Your Business</li>
+          <li>Dedicated Support and Training</li>
+        </ul>
+      </div>
+
+      <div class="mt-8">
+        <h3 class="text-2xl font-bold mb-4">Contact Us</h3>
+        <p class="text-gray-700 leading-relaxed">
+          Get in touch with us to explore how we can help your organization
+          thrive with our innovative solutions.
+        </p>
+        <form class="mt-4">
+          <input
+            type="text"
+            placeholder="Name"
+            class="w-full px-4 py-2 mb-2 border border-gray-300 rounded"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            class="w-full px-4 py-2 mb-2 border border-gray-300 rounded"
+          />
+          <textarea
+            placeholder="Message"
+            class="w-full px-4 py-2 mb-2 border border-gray-300 rounded"
+          ></textarea>
+          <button class="bg-blue-900 text-white py-2 px-4 rounded">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div th:replace="fragments :: cod_footer"></div>
+  </body>
 </html>

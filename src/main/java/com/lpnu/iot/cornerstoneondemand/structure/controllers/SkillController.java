@@ -16,15 +16,6 @@ public class SkillController extends GenericController<Skill> {
 
     @Autowired
     public SkillController(SkillService service) {
-        super(service, "index");
-    }
-
-    @PostMapping("add")
-    public void addSkill(@PathVariable Long candidateId, @PathVariable String name, @PathVariable String level) throws Exception {
-        if(name == null)
-            throw new Exception("Invalid skill data");
-
-        Skill skill = new Skill(candidateId, name, SkillLevel.valueOf(level));
-        ((SkillService) service).createResource(skill);
+        super(service, "skills");
     }
 }
