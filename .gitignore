@@ -22,6 +22,9 @@ buildNumber.properties
 # csv files
 data/*
 
+# vscode
+.vscode/
+
 
 # tailwindcss
 node_modules/
